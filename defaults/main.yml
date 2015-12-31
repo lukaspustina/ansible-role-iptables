@@ -1,0 +1,12 @@
+---
+
+_iptables:
+  default_policy:
+    incoming: deny
+  state: enabled
+  rules:
+    - interface: eth0
+      ip: "{{ ansible_eth0.ipv4.address }}"
+      ports:
+        - { name: ssh, port: 22, proto: tcp, direction=in, rule=allow, delete: no }
+

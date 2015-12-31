@@ -1,0 +1,15 @@
+---
+galaxy_info:
+  author: Lukas Pustina
+  description: Installs UFW and configures iptables firewall rules.
+  license: GPL
+  min_ansible_version: 1.9
+  platforms:
+    - name: Ubuntu
+    - name: Debian
+  galaxy_tags:
+    - ops
+    - installer
+    - system
+    - security
+

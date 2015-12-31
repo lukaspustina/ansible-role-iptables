@@ -1,0 +1,25 @@
+---
+
+- name: Install UFW
+  apt: pkg=ufw state=present
+
+- name: Activate
+  ufw: state={{ _iptables.state }} policy=allow
+
+- name: Create Port Rules
+  ufw:
+    rule={{ item.1.rule|default('allow') }}
+    interface={{ item.0.interface }}
+    src=any
+    dest={{ item.0.ip }}
+    direction={{ item.1.direction|default('in') }}
+    proto={{ item.1.proto|default('tcp') }}
+    port={{ item.1.port }}
+    delete={{ item.1.delete|default('no') }}
+  with_subelements:
+    - _iptables.rules
+    - ports
+
+- name: Activate Default Policy
+  ufw: policy={{ _iptables.default_policy.incoming }} direction=incoming
+
