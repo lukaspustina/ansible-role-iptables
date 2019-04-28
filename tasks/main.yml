@@ -4,7 +4,7 @@
   apt: pkg=ufw state=present
 
 - name: Activate
-  ufw: state={{ _iptables.state }} policy=allow
+  ufw: state={{ _iptables.state }} policy=allow direction=outgoing
 
 - name: Create Port Rules
   ufw:
@@ -17,7 +17,7 @@
     port={{ item.1.port }}
     delete={{ item.1.delete|default('no') }}
   with_subelements:
-    - _iptables.rules
+    - "{{ _iptables.rules }}"
     - ports
 
 - name: Activate Default Policy
